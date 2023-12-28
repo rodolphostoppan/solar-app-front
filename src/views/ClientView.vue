@@ -1,6 +1,12 @@
 <template>
   <main>
-    <modal :show="showModal" @close="closeModal" @callback="addClient" route="bill" />
+    <modal
+      route="bill"
+      text="Tem certeza que deseja cadastrar esse cliente?"
+      :show="showModal"
+      @close="closeModal"
+      @callback="addClient"
+    />
     <h1>Cliente</h1>
     <p>Primeiro vamos cadastrar o cliente pra quem será feito o projeto:</p>
     <section>

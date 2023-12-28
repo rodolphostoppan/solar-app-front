@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <input :placeholder="name" :name="name" :id="name" />
+    <input :placeholder="name" :name="name" :id="name" :type="type" />
     <label :for="name">{{ name }}</label>
   </div>
 </template>
@@ -8,7 +8,8 @@
 <script lang="ts">
 export default {
   props: {
-    name: String
+    name: String,
+    type: String
   }
 }
 </script>

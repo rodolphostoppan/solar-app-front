@@ -111,10 +111,14 @@ input:focus ~ label {
 }
 
 ul {
+  width: 100%;
   display: grid;
   gap: 1rem;
   margin-top: 1rem;
+  position: absolute;
   font-size: 2rem;
+  background-color: var(--background-color);
+  z-index: 1;
 }
 
 li {
