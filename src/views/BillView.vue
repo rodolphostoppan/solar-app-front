@@ -1,7 +1,7 @@
 <template>
   <main>
     <modal-dialog
-      route="sizing"
+      route="project"
       text="Deseja cadastrar outra fatura?"
       :show="showModal"
       @close="closeModal"
@@ -27,7 +27,7 @@
 import InputTextComponent from '@/components/input-text-component.vue'
 import InputSelectComponent from '@/components/input-select-component.vue'
 import Button from '@/components/button-component.vue'
-import ModalDialog from '@/components/modal-dialog.vue'
+import ModalDialogBill from '@/components/bill-modal-dialog.vue'
 
 export default {
   components: {
@@ -40,7 +40,7 @@ export default {
     TariffInput: InputTextComponent,
     ConsumptionInput: InputTextComponent,
     SubmitBill: Button,
-    ModalDialog: ModalDialog
+    ModalDialog: ModalDialogBill
   },
   data() {
     return {
@@ -62,12 +62,12 @@ export default {
 <style scoped>
 main {
   display: grid;
-  justify-items: center;
 
-  padding: 4rem 1.5rem;
+  padding: 4rem 3rem;
   gap: 2rem;
 
-  > p {
+  > h1,
+  p {
     text-align: center;
   }
 }
