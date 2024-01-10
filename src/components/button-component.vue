@@ -1,5 +1,5 @@
 <template>
-  <button @click="goToPage(route as string)">{{ name }}</button>
+  <button>{{ name }}</button>
 </template>
 
 <script lang="ts">
@@ -7,13 +7,6 @@ export default {
   props: {
     name: String,
     route: String
-  },
-  methods: {
-    goToPage(name: string) {
-      this.$router.push({
-        name
-      })
-    }
   }
 }
 </script>

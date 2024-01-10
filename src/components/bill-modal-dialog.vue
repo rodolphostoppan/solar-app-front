@@ -4,8 +4,8 @@
     <div v-if="show" class="modalDialog">
       <span>{{ text }}</span>
       <div class="actions">
-        <actionButton @click="close" name="Sim" />
-        <actionButton @click="callback" name="Não" :route="route" />
+        <actionButton @click="addMore" name="Sim" />
+        <actionButton @click="callback" name="Não" />
       </div>
     </div>
   </div>
@@ -25,9 +25,6 @@ export default {
       type: Boolean,
       default: () => false,
       required: true
-    },
-    route: {
-      type: String
     }
   },
 
@@ -35,8 +32,8 @@ export default {
     callback() {
       this.$emit('action')
     },
-    close() {
-      this.$emit('close')
+    addMore() {
+      this.$emit('addMore')
     }
   }
 }
