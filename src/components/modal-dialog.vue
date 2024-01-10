@@ -5,7 +5,7 @@
       <span>{{ text }}</span>
       <div class="actions">
         <actionButton @click="close" name="Cancelar" />
-        <actionButton @click="callback" name="Continuar" :route="route" />
+        <actionButton @click="confirmAction" name="Continuar" :route="route" />
       </div>
     </div>
   </div>
@@ -32,7 +32,7 @@ export default {
   },
 
   methods: {
-    callback() {
+    confirmAction() {
       this.$emit('action')
     },
     close() {

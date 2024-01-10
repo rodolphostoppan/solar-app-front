@@ -6,13 +6,22 @@
         :name="name"
         :id="name"
         v-model="searchTerm"
+        @blur="handleBlur"
         @focus="drawer = true"
-        @blur="drawer = false"
+        @keydown.up.prevent="handleArrowUp"
+        @keydown.down.prevent="handleArrowDown"
+        @keydown.enter.prevent="handleEnter"
       />
       <label :for="name">{{ name }}</label>
     </div>
     <ul v-show="drawer === true">
-      <li v-for="opt in filteredList" :key="opt.id" @mousedown="selectItem(opt.item)">
+      <li
+        v-for="(opt, index) in filteredList"
+        :key="opt.id"
+        @mousedown="selectItem(opt.item)"
+        @mouseenter="highlightedIndex = index"
+        :class="{ highlighted: index === highlightedIndex }"
+      >
         {{ opt.item }}
       </li>
     </ul>
@@ -22,29 +31,41 @@
 <script lang="ts">
 export default {
   props: {
-    name: String
+    name: String,
+    modelValue: String,
+    options: {
+      type: Array<any>,
+      default: () => [] as any[]
+    }
   },
   data() {
     return {
       drawer: false,
       searchTerm: '',
-      options: [
-        { id: 1, item: 'PR' },
-        { id: 3, item: 'SP' },
-        { id: 4, item: 'RS' },
-        { id: 5, item: 'SC' },
-        { id: 6, item: 'MG' },
-        { id: 7, item: 'RJ' },
-        { id: 8, item: 'ES' },
-        { id: 9, item: 'MT' }
-      ]
+      highlightedIndex: -1
     }
   },
 
   methods: {
-    selectItem(item: string) {
-      this.searchTerm = item.toUpperCase()
+    handleBlur() {
       this.drawer = false
+    },
+    handleArrowUp() {
+      if (this.highlightedIndex > 0) this.highlightedIndex--
+    },
+    handleArrowDown() {
+      if (this.highlightedIndex < this.filteredList.length - 1) this.highlightedIndex++
+    },
+    handleEnter() {
+      if (this.highlightedIndex !== -1) {
+        this.selectItem(this.filteredList[this.highlightedIndex].item)
+        this.highlightedIndex = -1
+      }
+    },
+    selectItem(item: string) {
+      this.searchTerm = item.length > 2 ? item : item.toUpperCase()
+      this.drawer = false
+      this.$emit('update:modelValue', this.searchTerm)
     }
   },
 
@@ -53,6 +74,12 @@ export default {
       return this.options.filter((option) => {
         return option.item.toUpperCase().includes(this.searchTerm.toUpperCase())
       })
+    }
+  },
+
+  watch: {
+    modelValue(newVal: any) {
+      this.searchTerm = newVal
     }
   }
 }
@@ -122,7 +149,12 @@ ul {
 }
 
 li {
-  width: 3rem;
+  width: fit-content;
   border-bottom: 2px solid var(--primary-color);
+
+  &.highlighted {
+    transition: transform 0.3s;
+    transform: scale(1.5);
+  }
 }
 </style>
