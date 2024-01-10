@@ -1,7 +1,6 @@
 <template>
   <main>
     <modal
-      :route="route"
       text="Tem certeza que deseja cadastrar esse cliente?"
       :show="showModal"
       @close="closeModal"
@@ -42,7 +41,6 @@ export default {
       client: new Client(),
       clientService: new ClientService(inject(HTTP_CLIENT) as HttpClient),
       showModal: false,
-      route: '',
       states: [
         { id: 1, item: 'pr' },
         { id: 3, item: 'SP' },
@@ -70,13 +68,14 @@ export default {
     openModal() {
       this.showModal = true
     },
-
     closeModal() {
       this.showModal = false
     },
-
     async addClient() {
-      this.clientService.save(this.client as Client).then(() => (this.route = 'bill'))
+      this.clientService.save(this.client).then(() => {
+        this.$router.push({ name: 'bill' })
+        this.showModal = false
+      })
     }
   }
 }

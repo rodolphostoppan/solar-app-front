@@ -1,7 +1,7 @@
 <template>
   <main>
     <h2>Dimensionamento 👇</h2>
-    <start route="client" name="START" />
+    <start @click="goToPage" name="START" />
   </main>
 </template>
 
@@ -11,6 +11,11 @@ import StartButton from '../components/button-component.vue'
 export default {
   components: {
     Start: StartButton
+  },
+  methods: {
+    goToPage() {
+      this.$router.push({ name: 'client' })
+    }
   }
 }
 </script>

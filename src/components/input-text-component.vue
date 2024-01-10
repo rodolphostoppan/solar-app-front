@@ -14,11 +14,7 @@
 
 <script lang="ts">
 export default {
-  props: {
-    name: String,
-    type: String,
-    modelValue: String
-  }
+  props: ['name', 'type', 'modelValue']
 }
 </script>
 
