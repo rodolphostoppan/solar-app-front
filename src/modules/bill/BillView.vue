@@ -14,13 +14,7 @@
       <state-select name="Estado" :options="states" v-model="bill.location.state" />
       <city-select name="Cidade" :options="cities" v-model="bill.location.city" />
       <address-input name="Endereço" v-model="bill.location.address" />
-      <amount-input
-        name="Valor da fatura"
-        type="number"
-        unit="R$"
-        unit-position="prefix"
-        v-model="bill.amount"
-      />
+      <amount-input name="Valor da fatura" type="number" v-model="bill.amount" />
       <tariff-input name="Valor da tarifa" type="number" v-model="bill.tariff" />
       <consumption-input name="Consumo médio" type="number" v-model="bill.consumption" />
       <submit-bill name="CADASTRAR" @click="openModal" />
@@ -34,9 +28,7 @@ import InputSelectComponent from '@/components/input-select-component.vue'
 import Button from '@/components/button-component.vue'
 import ModalDialogBill from '@/components/bill-modal-dialog.vue'
 import { Bill } from './entities/bill'
-import { BillService } from './services/bill.service'
-import { inject } from 'vue'
-import { HTTP_CLIENT, type HttpClient } from '@/infra/http/http'
+import { projectStore } from '@/store/project-store'
 
 export default {
   components: {
@@ -53,8 +45,8 @@ export default {
   },
   data() {
     return {
+      store: projectStore(),
       bill: new Bill(),
-      billService: new BillService(inject(HTTP_CLIENT) as HttpClient),
       showModal: false,
       states: [
         { id: 1, item: 'pr' },
@@ -80,29 +72,31 @@ export default {
   },
   methods: {
     clearInputs() {
-      this.bill.uc = 0
-      this.bill.holder = ''
-      this.bill.location.state = ''
-      this.bill.location.city = ''
-      this.bill.location.address = ''
-      this.bill.amount = 0
-      this.bill.tariff = 0
-      this.bill.consumption = 0
+      this.bill.uc = Number()
+      this.bill.holder = String()
+      this.bill.location.state = String()
+      this.bill.location.city = String()
+      this.bill.location.address = String()
+      this.bill.amount = Number()
+      this.bill.tariff = Number()
+      this.bill.consumption = Number()
     },
     openModal() {
       this.showModal = true
     },
     addMoreBills() {
-      this.billService.save(this.bill).then(() => {
-        this.showModal = false
-        this.clearInputs()
+      this.store.data.bills.push({
+        ...this.bill
       })
+      this.clearInputs()
+      this.showModal = false
     },
-    async addOneBill() {
-      this.billService.save(this.bill).then(() => {
-        this.$router.push({ name: 'project' })
-        this.showModal = false
+    addOneBill() {
+      this.store.data.bills.push({
+        ...this.bill
       })
+      this.$router.push({ name: 'project' })
+      this.showModal = false
     }
   }
 }

@@ -9,10 +9,18 @@
     <h1>Cliente</h1>
     <p>Primeiro vamos cadastrar o cliente pra quem será feito o projeto:</p>
     <form @submit.prevent="openModal">
-      <input-text-component v-model="client.name" name="Cliente" />
-      <input-select-component v-model="client.location.state" name="Estado" :options="states" />
-      <input-select-component v-model="client.location.city" name="Cidade" :options="cities" />
-      <input-text-component v-model="client.location.address" name="Endereço" />
+      <input-text-component v-model="store.data.client.name" name="Cliente" />
+      <input-select-component
+        v-model="store.data.client.location.state"
+        name="Estado"
+        :options="states"
+      />
+      <input-select-component
+        v-model="store.data.client.location.city"
+        name="Cidade"
+        :options="cities"
+      />
+      <input-text-component v-model="store.data.client.location.address" name="Endereço" />
       <submit-client name="CADASTRAR" />
     </form>
   </main>
@@ -27,6 +35,7 @@ import { Client } from './entities/client'
 import { ClientService } from './services/client.service'
 import { inject } from 'vue'
 import { HTTP_CLIENT, type HttpClient } from '@/infra/http/http'
+import { projectStore } from '@/store/project-store'
 
 export default {
   components: {
@@ -38,6 +47,7 @@ export default {
 
   data() {
     return {
+      store: projectStore(),
       client: new Client(),
       clientService: new ClientService(inject(HTTP_CLIENT) as HttpClient),
       showModal: false,
@@ -71,11 +81,9 @@ export default {
     closeModal() {
       this.showModal = false
     },
-    async addClient() {
-      this.clientService.save(this.client).then(() => {
-        this.$router.push({ name: 'bill' })
-        this.showModal = false
-      })
+    addClient() {
+      this.$router.push({ name: 'bill' })
+      this.showModal = false
     }
   }
 }

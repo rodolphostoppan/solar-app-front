@@ -3,10 +3,14 @@
     <h1>Projeto</h1>
     <p>Por fim, só preciso de mais alguns dados pra mostrar o projeto do seu cliente:</p>
     <section>
-      <state-select name="Estado" :options="states" v-model="project.location.state" />
-      <city-select name="Cidade" :options="cities" v-model="project.location.city" />
-      <address-input name="Endereço" v-model="project.location.address" />
-      <amount-input name="Potência dos módulos (W)" type="number" v-model="project.modulesPower" />
+      <state-select name="Estado" :options="states" v-model="store.data.location.state" />
+      <city-select name="Cidade" :options="cities" v-model="store.data.location.city" />
+      <address-input name="Endereço" v-model="store.data.location.address" />
+      <amount-input
+        name="Potência dos módulos (W)"
+        type="number"
+        v-model="store.data.modulesPower"
+      />
       <submit-bill name="DIMENSIONAR" @click="projectSizing" />
     </section>
   </main>
@@ -19,7 +23,7 @@ import Button from '@/components/button-component.vue'
 import { ProjectService } from './services/project.service'
 import { HTTP_CLIENT, type HttpClient } from '@/infra/http/http'
 import { inject } from 'vue'
-import { Project } from './entities/project'
+import { projectStore } from '../../store/project-store'
 
 export default {
   components: {
@@ -31,7 +35,7 @@ export default {
   },
   data() {
     return {
-      project: new Project(),
+      store: projectStore(),
       projectService: new ProjectService(inject(HTTP_CLIENT) as HttpClient),
       states: [
         { id: 1, item: 'pr' },
@@ -57,7 +61,7 @@ export default {
   },
   methods: {
     async projectSizing() {
-      await this.projectService.save(this.project).then(() => {
+      await this.projectService.save(this.store.data).then(() => {
         this.$router.push({ name: 'sizing' })
       })
     }
