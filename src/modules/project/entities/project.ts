@@ -1,4 +1,4 @@
-import type { Bill } from '@/modules/bill/entities/bill'
+import { Bill } from '@/modules/bill/entities/bill'
 import { Client } from '@/modules/client/entities/client'
 import { Location } from '@/modules/entities/location'
 import { MonthGeneration } from './monthGeneration'
@@ -6,7 +6,7 @@ import { MonthGeneration } from './monthGeneration'
 export class Project {
   public id: string
   public client: Client
-  public bills: Array<Bill>
+  public bills: Bill[]
   public location: Location
   public ground: boolean
   public power: number
@@ -19,7 +19,7 @@ export class Project {
   constructor(data: any = {}) {
     this.id = data.id
     this.client = new Client()
-    this.bills = new Array<Bill>()
+    this.bills = []
     this.location = new Location()
     this.ground = data.ground
     this.power = data.power
@@ -33,7 +33,7 @@ export class Project {
   format() {
     return {
       id: this.id,
-      client: this.client,
+      client: this.client.format(),
       bills: this.bills,
       location: this.location,
       ground: this.ground,
