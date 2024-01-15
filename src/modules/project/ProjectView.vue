@@ -12,6 +12,7 @@
         v-model="store.data.modulesPower"
       />
       <submit-bill name="DIMENSIONAR" @click="projectSizing" />
+      <progress-bar :show="loader" text="Dimensionando projeto..." />
     </section>
   </main>
 </template>
@@ -20,6 +21,7 @@
 import InputTextComponent from '@/components/input-text-component.vue'
 import InputSelectComponent from '@/components/input-select-component.vue'
 import Button from '@/components/button-component.vue'
+import ProgressBar from '@/components/progress-bar.vue'
 import { ProjectService } from './services/project.service'
 import { HTTP_CLIENT, type HttpClient } from '@/infra/http/http'
 import { inject } from 'vue'
@@ -32,12 +34,14 @@ export default {
     CitySelect: InputSelectComponent,
     AddressInput: InputTextComponent,
     AmountInput: InputTextComponent,
-    SubmitBill: Button
+    SubmitBill: Button,
+    ProgressBar: ProgressBar
   },
   data() {
     return {
       store: projectStore(),
       projectService: new ProjectService(inject(HTTP_CLIENT) as HttpClient),
+      loader: false,
       states: states,
       cities: [
         { id: 1, item: 'Maringá' },
@@ -53,9 +57,15 @@ export default {
   },
   methods: {
     async projectSizing() {
-      await this.projectService.save(this.store.data).then(() => {
-        this.$router.push({ name: 'sizing' })
-      })
+      this.loader = true
+      await this.projectService
+        .save(this.store.data)
+        .finally(() => {
+          this.loader = false
+        })
+        .then(() => {
+          this.$router.push({ name: 'sizing' })
+        })
     }
   }
 }
