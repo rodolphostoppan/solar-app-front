@@ -3,7 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import ClientView from '../modules/client/ClientView.vue'
 import BillView from '../modules/bill/BillView.vue'
 import ProjectView from '../modules/project/ProjectView.vue'
-import SizingView from '@/views/SizingView.vue'
+import SizingView from '@/modules/sizing/SizingView.vue'
 
 const routes = [
   { name: 'home', path: '/', component: HomeView },

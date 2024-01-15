@@ -29,6 +29,7 @@ import Button from '@/components/button-component.vue'
 import ModalDialogBill from '@/components/bill-modal-dialog.vue'
 import { Bill } from './entities/bill'
 import { projectStore } from '@/store/project-store'
+import { states } from '@/infra/states/states'
 
 export default {
   components: {
@@ -48,16 +49,7 @@ export default {
       store: projectStore(),
       bill: new Bill(),
       showModal: false,
-      states: [
-        { id: 1, item: 'pr' },
-        { id: 3, item: 'SP' },
-        { id: 4, item: 'RS' },
-        { id: 5, item: 'SC' },
-        { id: 6, item: 'MG' },
-        { id: 7, item: 'RJ' },
-        { id: 8, item: 'ES' },
-        { id: 9, item: 'MT' }
-      ],
+      states: states,
       cities: [
         { id: 1, item: 'Maringá' },
         { id: 3, item: 'Londrina' },
