@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
-    <div v-if="show" class="overlay"></div>
-    <div v-if="show" class="modalDialog">
+  <div v-if="show" class="container">
+    <div class="overlay"></div>
+    <div class="modalDialog">
       <span>{{ text }}</span>
       <div class="actions">
         <actionButton @click="close" name="Cancelar" />
@@ -87,7 +87,7 @@ export default {
 
 @keyframes zoom-in-zoom-out {
   0% {
-    transform: scale(1, 1);
+    transform: scale(0.8, 0.8);
   }
   50% {
     transform: scale(1.2, 1.2);
