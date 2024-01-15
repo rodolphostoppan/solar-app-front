@@ -7,10 +7,7 @@
 
 <script lang="ts">
 export default {
-  props: {
-    name: String,
-    value: String
-  }
+  props: ['name', 'value']
 }
 </script>
 

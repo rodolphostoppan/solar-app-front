@@ -24,6 +24,7 @@ import { ProjectService } from './services/project.service'
 import { HTTP_CLIENT, type HttpClient } from '@/infra/http/http'
 import { inject } from 'vue'
 import { projectStore } from '../../store/project-store'
+import { states } from '../../infra/states/states'
 
 export default {
   components: {
@@ -37,16 +38,7 @@ export default {
     return {
       store: projectStore(),
       projectService: new ProjectService(inject(HTTP_CLIENT) as HttpClient),
-      states: [
-        { id: 1, item: 'pr' },
-        { id: 3, item: 'SP' },
-        { id: 4, item: 'RS' },
-        { id: 5, item: 'SC' },
-        { id: 6, item: 'MG' },
-        { id: 7, item: 'RJ' },
-        { id: 8, item: 'ES' },
-        { id: 9, item: 'MT' }
-      ],
+      states: states,
       cities: [
         { id: 1, item: 'Maringá' },
         { id: 3, item: 'Londrina' },
