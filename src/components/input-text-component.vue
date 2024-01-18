@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <input
+      autocomplete="off"
       :placeholder="name"
       :name="name"
       :id="name"

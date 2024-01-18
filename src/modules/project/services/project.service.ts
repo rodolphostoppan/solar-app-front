@@ -28,4 +28,10 @@ export class ProjectService {
       return data.map((project: any) => new Project(project))
     })
   }
+
+  getAllCitiesNames(): Promise<string[]> {
+    return this.httpClient.get('/cities').then(({ data }) => {
+      return data.map((citiesNames: string) => new Array(citiesNames))
+    })
+  }
 }

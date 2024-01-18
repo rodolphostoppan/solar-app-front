@@ -50,16 +50,7 @@ export default {
       bill: new Bill(),
       showModal: false,
       states: states,
-      cities: [
-        { id: 1, item: 'Maringá' },
-        { id: 3, item: 'Londrina' },
-        { id: 4, item: 'Curitiba' },
-        { id: 5, item: 'Marialva' },
-        { id: 6, item: 'Sarandi' },
-        { id: 7, item: 'Colorado' },
-        { id: 8, item: 'Santa Fé' },
-        { id: 9, item: 'Paiçandu' }
-      ]
+      cities: []
     }
   },
   methods: {
@@ -90,6 +81,14 @@ export default {
       this.$router.push({ name: 'project' })
       this.showModal = false
     }
+  },
+
+  created() {
+    this.$watch('bill.location.state', async () => {
+      await fetch(`./src/infra/cities/${this.bill.location.state.toLowerCase()}.json`)
+        .then((response) => response.json())
+        .then((cities) => (this.cities = cities))
+    })
   }
 }
 </script>

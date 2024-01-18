@@ -1,0 +1,9 @@
+button.icon-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary-color);
+  width: 3.6rem;
+  height: 3.6rem;
+  border-radius: 50rem;
+}
