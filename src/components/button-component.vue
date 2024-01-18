@@ -5,8 +5,7 @@
 <script lang="ts">
 export default {
   props: {
-    name: String,
-    route: String
+    name: String
   }
 }
 </script>

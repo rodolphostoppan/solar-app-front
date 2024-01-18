@@ -43,16 +43,7 @@ export default {
       projectService: new ProjectService(inject(HTTP_CLIENT) as HttpClient),
       loader: false,
       states: states,
-      cities: [
-        { id: 1, item: 'Maringá' },
-        { id: 3, item: 'Londrina' },
-        { id: 4, item: 'Curitiba' },
-        { id: 5, item: 'Marialva' },
-        { id: 6, item: 'Sarandi' },
-        { id: 7, item: 'Colorado' },
-        { id: 8, item: 'Santa Fé' },
-        { id: 9, item: 'Paiçandu' }
-      ]
+      cities: []
     }
   },
   methods: {
@@ -67,6 +58,14 @@ export default {
           this.$router.push({ name: 'sizing' })
         })
     }
+  },
+
+  created() {
+    this.$watch('store.data.location.state', async () => {
+      await fetch(`./src/infra/cities/${this.store.data.location.state.toLowerCase()}.json`)
+        .then((response) => response.json())
+        .then((cities) => (this.cities = cities))
+    })
   }
 }
 </script>

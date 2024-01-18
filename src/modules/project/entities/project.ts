@@ -18,9 +18,9 @@ export class Project {
 
   constructor(data: any = {}) {
     this.id = data.id
-    this.client = new Client()
-    this.bills = []
-    this.location = new Location()
+    this.client = data.client ? new Client(data.client) : new Client()
+    this.bills = data.bills || []
+    this.location = data.location ? new Location(data.location) : new Location()
     this.ground = data.ground
     this.power = data.power
     this.modules = data.modules

@@ -8,7 +8,7 @@ export class Client {
   constructor(data: any = {}) {
     this.id = data.id
     this.name = data.name
-    this.location = new Location()
+    this.location = data.location ? new Location(data.location) : new Location()
   }
 
   format() {

@@ -2,6 +2,7 @@
   <div class="container">
     <div class="search-container">
       <input
+        autocomplete="off"
         :placeholder="name"
         :name="name"
         :id="name"
@@ -17,12 +18,12 @@
     <ul v-show="drawer === true">
       <li
         v-for="(opt, index) in filteredList"
-        :key="opt.id"
-        @mousedown="selectItem(opt.item)"
+        :key="index"
+        @mousedown="selectItem(opt)"
         @mouseenter="highlightedIndex = index"
         :class="{ highlighted: index === highlightedIndex }"
       >
-        {{ opt.item }}
+        {{ opt }}
       </li>
     </ul>
   </div>
@@ -34,8 +35,8 @@ export default {
     name: String,
     modelValue: String,
     options: {
-      type: Array<any>,
-      default: () => [] as any[]
+      type: Array<string>,
+      default: () => [] as string[]
     }
   },
   data() {
@@ -58,7 +59,7 @@ export default {
     },
     handleEnter() {
       if (this.highlightedIndex !== -1) {
-        this.selectItem(this.filteredList[this.highlightedIndex].item)
+        this.selectItem(this.filteredList[this.highlightedIndex])
         this.highlightedIndex = -1
       }
     },
@@ -72,7 +73,7 @@ export default {
   computed: {
     filteredList() {
       return this.options.filter((option) => {
-        return option.item.toUpperCase().includes(this.searchTerm.toUpperCase())
+        return option.toUpperCase().includes(this.searchTerm.toUpperCase())
       })
     }
   },

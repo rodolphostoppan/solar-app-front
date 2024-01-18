@@ -13,7 +13,7 @@ export class Bill {
     this.id = data.id
     this.uc = data.uc
     this.holder = data.holder
-    this.location = new Location()
+    this.location = data.location ? new Location(data.location) : new Location()
     this.amount = data.amount
     this.tariff = data.tariff
     this.consumption = data.consumption
